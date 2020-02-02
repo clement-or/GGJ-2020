@@ -1,0 +1,39 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://nodes/player/PlayerController.gd" type="Script" id=2]
+[ext_resource path="res://poule.png" type="Texture" id=3]
+[ext_resource path="res://nodes/player/InteractArea.gd" type="Script" id=4]
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 35.4077
+height = 65.2659
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 106.565
+
+[node name="Player" type="KinematicBody2D"]
+script = ExtResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 3 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource( 1 )
+
+[node name="BulletSpawn" type="Position2D" parent="."]
+position = Vector2( 96.7764, 0 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+smoothing_enabled = true
+
+[node name="InteractArea" type="Area2D" parent="."]
+script = ExtResource( 4 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractArea"]
+shape = SubResource( 2 )
+[connection signal="area_entered" from="InteractArea" to="InteractArea" method="_on_InteractArea_area_entered"]
+[connection signal="area_exited" from="InteractArea" to="InteractArea" method="_on_InteractArea_area_exited"]
+[connection signal="body_entered" from="InteractArea" to="InteractArea" method="_on_InteractArea_body_entered"]
+[connection signal="body_exited" from="InteractArea" to="InteractArea" method="_on_InteractArea_body_exited"]
